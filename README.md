@@ -5,7 +5,7 @@
 
 Need to add call `UseServiceProviderFactory` for host. And Add method `public void ConfigureContainer(ContainerBuilder builder)` into `Startup` class.
 
-```
+```csharp
 public static void Main(string[] args)
 {
     CreateHostBuilder(args)
@@ -60,8 +60,7 @@ public class TestAutofacDependency
             {
                 new MyModule(), 
             });        
-        });
-        
+        });        
     }
 }
 ```
