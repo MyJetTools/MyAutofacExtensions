@@ -2,11 +2,12 @@ name: check commit
 
 on:
   push:
-    tags: [ "test-*.rc*" ]
+    tags: [ "*" ]
 
 jobs:
   build:
 
+    if: "github.event.release.prerelease"
     runs-on: ubuntu-latest
 
     steps:
@@ -15,16 +16,10 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.101
-    - name: Install dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build --configuration Release --no-restore
-    - name: Test
-      run: dotnet test --no-restore --verbosity normal
     - name: Print 1
-      run: echo ${GITHUB_REF#refs/tags/}
+      run: |
+        vers=${GITHUB_REF#refs/tags/}
+        vers=${vers/rc} 
+        echo $vers
     - name: Print 2
-      run: echo ${GITHUB_REF#refs/tags/test-}
-    - name: Print 3
-      run: echo ${GITHUB_REF#refs/tags/test-*rc*}
-      
+      run: echo ${GITHUB_REF#refs/tags/}      
